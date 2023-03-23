@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  grendel:
+    image: grendel-rocky
+    network_mode: "host"
+    volumes:
+      - ./:/app/

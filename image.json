@@ -1,0 +1,11 @@
+[
+    {
+        "name": "ubuntu-focal-live",
+        "kernel": "boot/ubuntu-focal-vmlinuz",
+        "initrd": [
+            "boot/ubuntu-focal-initramfs.img"
+        ],
+        "liveimg": "boot/ubuntu-focal-squashfs.img",
+        "cmdline": "console=ttyS0 console=tty0 root=live:http://192.168.10.254/boot/ubuntu-focal-squashfs.img BOOTIF=$mac ip=dhcp rd.neednet=1"
+    }
+]

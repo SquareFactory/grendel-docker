@@ -1,0 +1,14 @@
+[
+    {
+        "name": "tux01",
+        "provision": true,
+        "boot_image": "ubuntu-focal-live",
+        "interfaces": [
+            {
+                "fqdn": "tux01.localhost",
+                "ip": "192.168.10.12/24",
+                "mac": "DE:AD:BE:EF:12:8C"
+            }
+        ]
+    }
+]
