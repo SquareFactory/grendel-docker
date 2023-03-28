@@ -1,6 +1,6 @@
 FROM rockylinux:latest as builder
 
-RUN apk add --no-cache \
+RUN dnf install -y \
   gcc \
   make \
   wget \
