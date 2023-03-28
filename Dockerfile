@@ -1,4 +1,4 @@
-FROM rockylinux:latest as builder
+FROM docker.io/library/rockylinux:9 as builder
 
 RUN dnf install -y \
   gcc \
@@ -26,7 +26,7 @@ RUN git clone --recursive https://github.com/ubccr/grendel \
   && cd .. \
   && go build -o grendel .
 
-FROM rockylinux:latest
+FROM docker.io/library/rockylinux:9
 
 RUN dnf install -y xz && dnf clean all
 
