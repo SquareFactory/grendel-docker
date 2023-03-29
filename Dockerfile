@@ -1,34 +1,35 @@
-FROM docker.io/library/rockylinux:9 as builder
+FROM docker.io/library/alpine:edge as builder
 
-RUN dnf install -y \
+RUN apk add --no-cache \
   gcc \
   make \
   wget \
   git \
-  xz-devel \
-  && dnf clean all
+  perl \
+  xz-dev \
+  musl-dev
 
 ARG TARGETOS TARGETARCH VERSION=dev
-RUN mkdir -p /usr/local \
-  && wget -q https://go.dev/dl/go1.20.2.${TARGETOS}-${TARGETARCH}.tar.gz \
-  && tar -C /usr/local -xzf go1.20.2.${TARGETOS}-${TARGETARCH}.tar.gz \
-  && rm -f go1.20.2.${TARGETOS}-${TARGETARCH}.tar.gz
+COPY --from=docker.io/library/golang:1.20.2-alpine /usr/local/go/ /usr/local/go/
 
 ENV PATH="${PATH}:/usr/local/go/bin"
 
 WORKDIR /work
 
 RUN git clone --recursive https://github.com/ubccr/grendel \
-  && cd grendel/firmware \
+  && cd grendel/firmware/ipxe \
+  && git checkout master \
+  && git pull \
+  && cd .. \
   && sed -Ei 's/make/make -j$(nproc)/g' Makefile \
   && make build \
   && make bindata \
   && cd .. \
   && go build -o grendel .
 
-FROM docker.io/library/rockylinux:9
+FROM docker.io/library/alpine:edge
 
-RUN dnf install -y xz && dnf clean all
+RUN apk add --no-cache xz-libs
 
 LABEL MAINTAINER Square Factory
 
