@@ -93,7 +93,7 @@ RUN cd grendel \
 FROM docker.io/library/alpine:edge
 # ---------------------------------------------------
 
-RUN apk add --no-cache xz-libs
+RUN apk add --no-cache xz-libs ipmitool
 
 LABEL MAINTAINER Square Factory
 
