@@ -1,3 +1,5 @@
+ARG GRENDEL_VERSION=0.8.2
+
 # ---------------------------------------------------
 FROM --platform=linux/arm64/v8 docker.io/library/alpine:edge as ipxe-builder-arm64
 # ---------------------------------------------------
@@ -13,7 +15,8 @@ RUN apk add --no-cache \
 
 WORKDIR /work
 
-RUN git clone -b 0.8.1 --recursive https://github.com/SquareFactory/grendel.git \
+ARG GRENDEL_VERSION
+RUN git clone -b ${GRENDEL_VERSION} --recursive https://github.com/SquareFactory/grendel.git \
   && cd grendel/firmware/ipxe/src \
   && git checkout master \
   && git pull
@@ -43,7 +46,8 @@ RUN apk add --no-cache \
 
 WORKDIR /work
 
-RUN git clone -b 0.8.1 --recursive https://github.com/SquareFactory/grendel.git \
+ARG GRENDEL_VERSION
+RUN git clone -b ${GRENDEL_VERSION} --recursive https://github.com/SquareFactory/grendel.git \
   && cd grendel/firmware/ipxe/src \
   && git checkout master \
   && git pull
@@ -77,7 +81,8 @@ ENV PATH="${PATH}:/usr/local/go/bin"
 
 WORKDIR /work
 
-RUN git clone -b 0.8.1 https://github.com/SquareFactory/grendel.git
+ARG GRENDEL_VERSION
+RUN git clone -b ${GRENDEL_VERSION} https://github.com/SquareFactory/grendel.git
 
 COPY --from=ipxe-builder-arm64 /work/grendel/firmware/ipxe/src/bin-arm64-efi/ipxe.efi /work/grendel/firmware/bin/ipxe-arm64.efi
 COPY --from=ipxe-builder-amd64 /work/grendel/firmware/ipxe/src/bin/ipxe.pxe /work/grendel/firmware/bin/ipxe.pxe
