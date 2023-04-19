@@ -1,4 +1,4 @@
-ARG GRENDEL_VERSION=0.8.2
+ARG GRENDEL_VERSION=0.8.3
 
 # ---------------------------------------------------
 FROM --platform=linux/arm64/v8 docker.io/library/alpine:edge as ipxe-builder-arm64
